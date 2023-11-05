@@ -1,2 +1,5 @@
 # Cached build files
 *.pyc
+
+# Enviromental variables
+.env

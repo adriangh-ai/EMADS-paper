@@ -65,6 +65,7 @@ class CompositionPipeline(Pipeline):
         return_tensors = self.framework
         model_inputs = self.tokenizer(inputs, return_tensors=return_tensors, **tokenize_kwargs)
         
+        # Store current vector special token mask
         input_ids = model_inputs['input_ids'].squeeze()
         special_tokens_tensor = torch.tensor(self.tokenizer.all_special_ids)
         self.current_special_vector_mask = ~input_ids.unsqueeze(1).eq(special_tokens_tensor).any(1)
@@ -91,9 +92,9 @@ class CompositionPipeline(Pipeline):
             list or Tensor: The postprocessed model outputs, with special tokens removed 
                             and composition function applied.
         """ 
-        output = None
-        if return_tensors: output = model_outputs[0]
+        if return_tensors: return model_outputs[0]
         
+        # Remove special token vectors and compose
         output = [token_tensor[self.current_special_vector_mask] for token_tensor in model_outputs[0]]
         output = [cf.compose(sample, comp_fun).tolist() for sample in output] 
         
