@@ -1,6 +1,6 @@
 # Embedding Meaning Algebra into Distributional Semantics
 
-This repository contains the implementations for the work Embedding Meaning Algebra into
+This repository contains the implementation for the work Embedding Meaning Algebra into
 Distributional Semantics.
 
 ## Abstract
