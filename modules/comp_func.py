@@ -91,7 +91,7 @@ def compose(vector_list:Union[Tensor, list], comp_fun:str) -> list:
         >>> compose(vector_list, 'avg')
         tensor([2.5, 3.5, 4.5])
     """
-    if isinstance(vector_list, list) : vector_list = torch.tensor(vector_list)
+    if isinstance(vector_list, list): vector_list = torch.tensor(vector_list)
 
     if comp_fun == 'sum': return torch.sum(vector_list, dim=0).tolist()
     if comp_fun == 'avg': return (torch.sum(vector_list, dim=0) / len(vector_list)).tolist()
