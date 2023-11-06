@@ -1,5 +1,6 @@
-import modules.composition
+import torch
 
+from modules import composition, comp_func
 from transformers import AutoModel, AutoTokenizer, pipeline
 
 if __name__ == "__main__":
@@ -9,5 +10,12 @@ if __name__ == "__main__":
 
     pipe = pipeline('composition', model=model, tokenizer= tokenizer)
 
-    print(pipe('hi there', comp_fun='inf'))
+    # Composition of the model representation of a sentence 
+    output = pipe('this is a sentence'.split(), comp_fun='sum')
+    print(output)
     
+    # Composition of a sentence by its constinuent words
+    output = pipe('this is a sentence'.split(), comp_fun='sum')
+    output = comp_func.compose(output, comp_fun = 'avg')
+    print(output)
+

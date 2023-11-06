@@ -65,7 +65,7 @@ def parameters(vector_1:Tensor, vector_2:Tensor, comp_fun:str) -> Tuple[Union[in
     return params
 
 
-def compose(vector_list:Tensor, comp_fun:str) -> Tensor:
+def compose(vector_list:Union[Tensor, list], comp_fun:str) -> list:
     """
     Compose a list of vectors into a single vector based on:
         - Sum or average of the tensor
@@ -91,9 +91,10 @@ def compose(vector_list:Tensor, comp_fun:str) -> Tensor:
         >>> compose(vector_list, 'avg')
         tensor([2.5, 3.5, 4.5])
     """
+    if isinstance(vector_list, list) : vector_list = torch.tensor(vector_list)
 
-    if comp_fun == 'sum': return torch.sum(vector_list, dim=0)
-    if comp_fun == 'avg': return torch.sum(vector_list, dim=0) / len(vector_list)
+    if comp_fun == 'sum': return torch.sum(vector_list, dim=0).tolist()
+    if comp_fun == 'avg': return (torch.sum(vector_list, dim=0) / len(vector_list)).tolist()
     
     # ICDS cases
     vector_1 = vector_list[0]
@@ -101,7 +102,8 @@ def compose(vector_list:Tensor, comp_fun:str) -> Tensor:
         alpha, mu = parameters(vector_1, vector_2, comp_fun)
         vector_1 = f_fun(alpha, mu, vector_1, vector_2)
     
-    return vector_1
+    output = vector_1.tolist()
+    return output
                 
 
 ### TODO: Batched composition with torch GPU vectorization

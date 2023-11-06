@@ -28,6 +28,7 @@ class CompositionPipeline(Pipeline):
 
         Raises:
             ValueError: If `truncation` is specified both in `tokenize_kwargs` and as a parameter.
+            ValueError: If 'batch_size' is specified, as it is not supported at the moment
         """
 
         if tokenize_kwargs is None:
@@ -38,8 +39,11 @@ class CompositionPipeline(Pipeline):
                 raise ValueError(
                     "truncation parameter defined twice (given as keyword argument as well as in tokenize_kwargs)"
                 )
+            
             tokenize_kwargs["truncation"] = truncation
 
+        if 'bacth_size' in kwargs: raise ValueError('Batched inference is not supported at the moment.')
+        
         preprocess_params = tokenize_kwargs
 
         postprocess_params = {}
@@ -95,8 +99,8 @@ class CompositionPipeline(Pipeline):
         if return_tensors: return model_outputs[0]
         
         # Remove special token vectors and compose
-        output = [token_tensor[self.current_special_vector_mask] for token_tensor in model_outputs[0]]
-        output = [cf.compose(sample, comp_fun).tolist() for sample in output] 
+        output = model_outputs[0][0][self.current_special_vector_mask]
+        output = cf.compose(output, comp_fun)
         
         return output
     
