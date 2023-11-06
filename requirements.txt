@@ -27,6 +27,7 @@ decorator @ file:///opt/conda/conda-bld/decorator_1643638310831/work
 dill==0.3.7
 dnspython==2.2.1
 entrypoints @ file:///home/conda/feedstock_root/build_artifacts/entrypoints_1643888246732/work
+et-xmlfile==1.1.0
 evaluate==0.4.1
 exceptiongroup==1.0.4
 executing @ file:///opt/conda/conda-bld/executing_1646925071911/work
@@ -69,6 +70,7 @@ nest-asyncio @ file:///home/conda/feedstock_root/build_artifacts/nest-asyncio_16
 nltk==3.8.1
 numpy==1.26.1
 openai==0.28.1
+openpyxl==3.1.2
 packaging @ file:///home/conda/feedstock_root/build_artifacts/packaging_1696202382185/work
 pandas==2.1.2
 parso @ file:///opt/conda/conda-bld/parso_1641458642106/work

@@ -42,7 +42,7 @@ class CompositionPipeline(Pipeline):
             
             tokenize_kwargs["truncation"] = truncation
 
-        if 'bacth_size' in kwargs: raise ValueError('Batched inference is not supported at the moment.')
+        if 'bacth_size' in kwargs: raise ValueError('Batched inference is not currently supported.')
         
         preprocess_params = tokenize_kwargs
 

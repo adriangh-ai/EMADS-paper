@@ -3,3 +3,7 @@
 
 # Enviromental variables
 .env
+
+# Project files
+/results/*.csv
+/results/img/*

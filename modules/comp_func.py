@@ -54,8 +54,8 @@ def parameters(vector_1:Tensor, vector_2:Tensor, comp_fun:str) -> Tuple[Union[in
         "icds_avg":             (0.25, -0.5),
         "ind":                  (1, 0),
         "jnt":                  (1, 1),
-        "inf": lambda v1, v2:   (1, (torch.norm(torch.min(v1, v2)) /
-                                    torch.norm(torch.max(v1, v2))).item())
+        "inf": lambda v1, v2:   (1, (min(torch.norm(v1), torch.norm(v2)) /
+                                     max(torch.norm(v1), torch.norm(v2))).item())
     }
 
     params = op_dict[comp_fun]
@@ -93,8 +93,9 @@ def compose(vector_list:Union[Tensor, list], comp_fun:str) -> list:
     """
     if isinstance(vector_list, list): vector_list = torch.tensor(vector_list)
 
-    if comp_fun == 'sum': return torch.sum(vector_list, dim=0).tolist()
-    if comp_fun == 'avg': return (torch.sum(vector_list, dim=0) / len(vector_list)).tolist()
+    if not len(vector_list):  return torch.tensor([])
+    if comp_fun == 'sum':     return torch.sum(vector_list, dim = 0)
+    if comp_fun == 'avg':     return (torch.sum(vector_list, dim = 0) / len(vector_list))
     
     # ICDS cases
     vector_1 = vector_list[0]
@@ -102,7 +103,7 @@ def compose(vector_list:Union[Tensor, list], comp_fun:str) -> list:
         alpha, mu = parameters(vector_1, vector_2, comp_fun)
         vector_1 = f_fun(alpha, mu, vector_1, vector_2)
     
-    output = vector_1.tolist()
+    output = vector_1
     return output
                 
 

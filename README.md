@@ -70,7 +70,7 @@ The main functionality of this repository is encapsulated in the `pipeline` for 
 
 The `comp_fun` argument determines the composition function used to combine word embeddings. The available functions are 'sum' and 'avg', which correspond to summing or averaging the embeddings, respectively.
 
-Available funcions are: 
+Available functions are: 
    - 'sum'         : Vector sum
    - 'avg'         : Global average
    - 'icds_avg'    : ICDS Average
