@@ -94,16 +94,19 @@ def compose(vector_list:Union[Tensor, list], comp_fun:str) -> list:
     if isinstance(vector_list, list): vector_list = torch.tensor(vector_list)
 
     if not len(vector_list):  return torch.tensor([])
-    if comp_fun == 'sum':     return torch.sum(vector_list, dim = 0)
-    if comp_fun == 'avg':     return (torch.sum(vector_list, dim = 0) / len(vector_list))
-    
-    # ICDS cases
-    vector_1 = vector_list[0]
-    for vector_2 in vector_list[1:]:
-        alpha, mu = parameters(vector_1, vector_2, comp_fun)
-        vector_1 = f_fun(alpha, mu, vector_1, vector_2)
-    
-    output = vector_1
+
+    match comp_fun:
+        case 'sum':   output = torch.sum(vector_list, dim = 0)
+        case 'avg':   output = (torch.sum(vector_list, dim = 0) / len(vector_list))
+        case 'cls':   output = vector_list[0]
+        case 'eos':   output =  vector_list[-1]
+        case _:       # ICDS cases
+            vector_1 = vector_list[0]
+            for vector_2 in vector_list[1:]:
+                alpha, mu = parameters(vector_1, vector_2, comp_fun)
+                vector_1 = f_fun(alpha, mu, vector_1, vector_2)
+            output = vector_1
+            
     return output
                 
 

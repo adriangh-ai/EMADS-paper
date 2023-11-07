@@ -96,10 +96,13 @@ class CompositionPipeline(Pipeline):
             list or Tensor: The postprocessed model outputs, with special tokens removed 
                             and composition function applied.
         """ 
-        if return_tensors: return model_outputs[0]
+        if return_tensors:        return model_outputs[0]
         
+
         # Remove special token vectors and compose
         output = model_outputs[0][0][self.current_special_vector_mask]
+        if comp_fun in {'cls', 'eos'}: output = model_outputs.last_hidden_state[0]
+        
         output = cf.compose(output, comp_fun)
         
         return output

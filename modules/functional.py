@@ -23,7 +23,7 @@ def generalisation(vector_1: Tensor, vector_2: Tensor, op: int) -> Tensor:
     Args:
         vector_1 (Tensor): The first input tensor.
         vector_2 (Tensor): The second input tensor.
-        fun (int): An integer flag to determine the mode of operation.
+        op (int): An integer flag to determine the mode of operation.
             - If 1, perform a scalar product-based combination.
             - If 2, perform a minimum element-based combination.
             - If 3, take the minimum element of the two vectors.
@@ -32,7 +32,7 @@ def generalisation(vector_1: Tensor, vector_2: Tensor, op: int) -> Tensor:
         Tensor: The resulting tensor after applying the generalisation operation.
 
     Raises:
-        ValueError: If `fun` is not in [1, 2, 3].
+        ValueError: If `op` is not in [1, 2, 3].
     """
 
     if  op == 1:
@@ -68,7 +68,7 @@ def specification(vector_1: Tensor, vector_2: Tensor, op: int) -> Tensor:
     Args:
         vector_1 (Tensor): The first input tensor.
         vector_2 (Tensor): The second input tensor.
-        fun (int): An integer flag to determine the mode of operation.
+        op (int): An integer flag to determine the mode of operation.
             - If 1, simply add the two vectors.
             - If 2, combine the vectors based on the maximum element.
             - If 3, take the maximum element of the two vectors.
@@ -77,7 +77,7 @@ def specification(vector_1: Tensor, vector_2: Tensor, op: int) -> Tensor:
         Tensor: The resulting tensor after applying the specification operation.
 
     Raises:
-        ValueError: If `fun` is not in [1, 2, 3].
+        ValueError: If `op` is not in [1, 2, 3].
     """
 
     if  op == 1:
