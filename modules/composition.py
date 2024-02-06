@@ -66,8 +66,15 @@ class CompositionPipeline(Pipeline):
         Returns:
             dict: The tokenized and preprocessed inputs suitable for the model.
         """
+        # Tokenize, adding EOS token for Causal Models
+        # TODO Revise for corner cases (Encoders with EOS != PAD)
         return_tensors = self.framework
-        model_inputs = self.tokenizer(inputs, return_tensors=return_tensors, **tokenize_kwargs)
+        model_inputs = self.tokenizer(
+            inputs, 
+            add_eos_token=True, 
+            return_tensors=return_tensors, 
+            **tokenize_kwargs
+            )
         
         # Store current vector special token mask
         input_ids = model_inputs['input_ids'].squeeze()

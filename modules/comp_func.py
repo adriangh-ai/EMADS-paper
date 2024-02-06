@@ -96,10 +96,11 @@ def compose(vector_list:Union[Tensor, list], comp_fun:str) -> list:
     if not len(vector_list):  return torch.tensor([])
 
     match comp_fun:
-        case 'sum':   output = torch.sum(vector_list, dim = 0)
-        case 'avg':   output = (torch.sum(vector_list, dim = 0) / len(vector_list))
-        case 'cls':   output = vector_list[0]
-        case 'eos':   output =  vector_list[-1]
+        case 'sum':      output = torch.sum(vector_list, dim = 0)
+        case 'avg':      output = (torch.sum(vector_list, dim = 0) / len(vector_list))
+        case 'norm_avg': output = (torch.sum(vector_list, dim = 0) / torch.sqrt(len(vector_list)))
+        case 'cls':      output = vector_list[0]
+        case 'eos':      output =  vector_list[-1]
         case _:       # ICDS cases
             vector_1 = vector_list[0]
             for vector_2 in vector_list[1:]:

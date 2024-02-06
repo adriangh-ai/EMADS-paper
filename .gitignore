@@ -7,3 +7,6 @@
 # Project files
 /results/*.csv
 /results/img/*
+/results/latex
+
+/test-enrique
